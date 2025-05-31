@@ -1,6 +1,208 @@
-body{
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
+/* ======== RESET GERAL ======== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #fff;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ======== ELEMENTOS GERAIS ======== */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ======== LAYOUT FLEX E ÁREA PRINCIPAL ======== */
+.area-principal {
+  flex: 1;
+  overflow: auto;
+  padding: 20px;
+}
+
+/* ======== BARRA DE TOPO E RODAPÉ ======== */
+.barra-topo,
+.barra-rodape {
+  background: #cbeafe;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.barra-topo .centro,
+.barra-rodape .centro {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ======== LOGO ======== */
+.logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: white;
+  flex-shrink: 0;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 10px;
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: transparent;
+}
+
+/* ======== BOTÕES E INFO ======== */
+.display-info {
+  background: rgba(255, 255, 255, 0.6);
+  color: #333;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  min-width: 100px;
+  text-align: center;
+}
+
+.botao-sobre {
+  padding: 10px 20px;
+  background: #0052cc;
+  color: white;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.botao-sobre:hover {
+  background: #003f9e;
+}
+
+/* ======== CONTEÚDO CENTRAL ======== */
+.conteudo-centro {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.painel-lateral,
+.painel-centro {
+  background: #0052cc;
+  border-radius: 8px;
+  padding: 20px;
+  min-width: 260px;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+}
+
+.painel-lateral h3,
+.painel-centro h2 {
+  margin-bottom: 14px;
+  text-align: center;
+  font-size: 20px;
+}
+
+/* ======== LISTAS DE SENHAS ======== */
+.lista-senhas {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 5px;
+}
+
+.lista-senhas li {
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.vazio {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+/* ======== PAINEL DO MEIO: SENHA ATUAL E BOTÕES ======== */
+.painel-centro {
+  align-items: center;
+  justify-content: center;
+}
+
+.campo-senha-atual {
+  font-size: 48px;
+  margin-bottom: 30px;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn-chamar {
+  background: #4285f4;
+  color: white;
+  padding: 12px 28px;
+  font-size: 18px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  transition: background 0.2s;
+}
+
+.btn-chamar:hover {
+  background: #3367d6;
+}
+
+.btn-resetar {
+  background: #ff4d4d;
+  color: white;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 6px;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+
+.btn-resetar:hover {
+  background: #e04343;
+}
+
+/* ======== PAINEL ESQUERDO: ADICIONAR NOVA SENHA ======== */
+#novaSenha {
+  padding: 8px 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+#btnAdicionarSenha {
+  background: #34a853;
+  color: white;
+  padding: 8px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+#btnAdicionarSenha:hover {
+  background: #2c8c47;
 }
