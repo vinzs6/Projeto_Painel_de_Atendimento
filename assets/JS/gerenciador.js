@@ -1,5 +1,3 @@
-// Arquivo: assets/JS/gerenciador.js
-
 // ========================================
 // 1) Carrega dados do localStorage (ou inicializa)
 // ========================================
