@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Feedback-painel-de-atendimento</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .emoji-btn {
+      font-size: 3rem;
+      cursor: pointer;
+      border: none;
+      background: none;
+      transition: transform 0.2s;
+    }
+    .emoji-selected {
+      transform: scale(1.3);
+      filter: drop-shadow(0 0 5px #4caf50);
+    }
+  </style>
+</head>
+<body class="bg-light d-flex justify-content-center align-items-center vh-100">
+
+  <div class="container text-center p-4 bg-white rounded shadow" style="max-width: 500px;">
+    <h2 class="mb-4">Como foi seu atendimento hoje?</h2>
+
+    <!-- Emojis de avaliação para os pacientes -->
+<div id="emojiContainer" class="mb-4 d-flex justify-content-between text-center">
+
+  <div>
+    <button class="emoji-btn" data-value="5">😃</button>
+    <div class="fw-semibold text-success mt-1">Excelente</div>
+  </div>
+
+  <div>
+    <button class="emoji-btn" data-value="4">🙂</button>
+    <div class="fw-semibold text-success mt-1">Muito bom</div>
+  </div>
+
+  <div>
+    <button class="emoji-btn" data-value="3">😐</button>
+    <div class="fw-semibold text-warning mt-1">Regular</div>
+  </div>
+
+  <div>
+    <button class="emoji-btn" data-value="2">😞</button>
+    <div class="fw-semibold text-danger mt-1">Ruim</div>
+  </div>
+
+  <div>
+    <button class="emoji-btn" data-value="1">😠</button>
+    <div class="fw-semibold text-danger mt-1">Péssimo</div>
+  </div>
+
+</div>
+
+
+    <!-- Campo de comentário -->
+    <div id="commentSection" class="mb-3 d-none">
+      <label for="comment" class="form-label">Quer nos contar o que aconteceu? (opcional)</label>
+      <textarea class="form-control" id="comment" rows="3" placeholder="Escreva aqui..."></textarea>
+    </div>
+
+    <!-- Botão de envio -->
+    <button id="submitBtn" class="btn btn-success btn-lg w-100" disabled>Enviar Feedback</button>
+
+    <!-- Mensagem de agradecimento -->
+    <div id="thankYouMessage" class="alert alert-success d-none mt-3" role="alert">
+      ✅ A equipe SafeKeep agradece seu feedback! Redirecionando para a tela inicial...
+    </div>
+  </div>
+
+  <script>
+    const emojis = document.querySelectorAll('.emoji-btn');
+    const commentSection = document.getElementById('commentSection');
+    const submitBtn = document.getElementById('submitBtn');
+    let selectedValue = null;
+
+    // Seleção de emoji
+    emojis.forEach(btn => {
+      btn.addEventListener('click', () => {
+        emojis.forEach(b => b.classList.remove('emoji-selected'));
+        btn.classList.add('emoji-selected');
+        selectedValue = btn.getAttribute('data-value');
+        submitBtn.disabled = false;
+
+        // Mostra o campo de comentário se a nota for baixa, deixei no regular pra baixo, se quiserem deixo só no ruim > péssimo
+        if (selectedValue <=3 ) {
+          commentSection.classList.remove('d-none');
+        } else {
+          commentSection.classList.add('d-none');
+        }
+      });
+    });
+
+    submitBtn.addEventListener('click', () => {
+      // Mostra a mensagem de agradecimento
+      document.getElementById('thankYouMessage').classList.remove('d-none');
+      submitBtn.disabled = true;
+
+      // Redireciona de volta pra gerar senha novamente
+      setTimeout(() => {
+        window.location.href = "gerar-senha.html"; 
+      }, 4000);
+    });
+  </script>
+
+</body>
+</html>
