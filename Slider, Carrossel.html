@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Atendimento</title>
     <!-- Adicione os links para as bibliotecas do Bootstrap aqui -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <!-- Cabeçalho -->
     <header class="bg-primary text-white text-center py-3">
         <h1>Painel de Atendimento</h1>
-    </header>z
+    </header>
 
     <div class="container-fluid">
         <div class="row">
@@ -36,20 +36,57 @@
                     <div class="card-body">
                         <div id="videoCarousel" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
+
+
+
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <video width="100%" controls ="autoplay">
+        <source src="videos/video1.mp4" type="video/mp4">
+        
+      </video>
+    </div>
+    <div class="carousel-item">
+      <video width="100%" controls ="autoplay">
+        <source src="videos/video2.mp4" type="video/mp4">
+       
+      </video>
+    </div>
+    <div class="carousel-item">
+      <video width="100%" controls ="autoplay">
+        <source src="videos/video3.mp4" type="video/mp4">
+      
+      </video>
+      
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Anterior</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Próximo</span>
+  </a>
+</div>
+<!-- Incluindo jQuery e Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
                                 <!-- Adicione cada vídeo como um item do carrossel -->
-                                <div class="carousel-item active">
-                                    <video width="100%" controls autoplay>
-                                        <source src="video1.mp4" type="video/mp4">
+                               
+                                <div class="carousel-item">
+                                    <video width="100%" controls="autoplay">
+                                        <source src="C:\Users\pablo\Downloads\video2.mp4" type="video/mp4">
                                     </video>
                                 </div>
                                 <div class="carousel-item">
-                                    <video width="100%" controls autoplay>
-                                        <source src="video2.mp4" type="video/mp4">
-                                    </video>
-                                </div>
-                                <div class="carousel-item">
-                                    <video width="100%" controls autoplay>
-                                        <source src="video3.mp4" type="video/mp4">
+                                    <video width="100%" controls="autoplay">
+                                        <source src="C:\Users\pablo\Downloads\video3.mp4" type="video/mp4">
                                     </video>
                                 </div>
                             </div>
