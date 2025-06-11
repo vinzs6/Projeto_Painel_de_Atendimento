@@ -53,3 +53,30 @@
   font-size: 12px;
   color: #000;
 }
+
+.senha-container {
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    text-align: center;
+    z-index: 1000;
+}
+.titulo {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+.senha {
+    font-size: 4em;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+
+
+.tempo-restante {
+    font-size: 1.2em;
+    color: #666;
+    margin-top: 15px;
+}
