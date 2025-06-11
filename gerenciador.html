@@ -1,32 +1,79 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gerenciador</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="assets/CSS/footer.css" />
-  </head>
+ 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerenciador de Senhas</title>
 
-  <body>
-    <!--Rodapé-->
-    <footer>
-      <div class="footer">
-        <div class="f-1">
-          <div id="dataHora">data</div>
-        </div>
-        <!--------------------->
-        <div class="f-1">
-          <div class="logo">
-            <img src="assets/Img/logof.jpg" width="55px" alt="Logo da Empresa" />
-          </div>
-        </div>
-        <!--------------------->
-        <div class="f-1">
-          <div id="clima">clima</div>
-        </div>
+  <!-- Estilo principal -->
+  <link rel="stylesheet" href="assets/CSS/style-2.css" />
+
+  <!-- Fonte Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ========== CABEÇALHO ========== -->
+  <header class="barra-topo">
+    <div class="display-info" id="displayDataHoraTopo">--:-- --/--/----</div>
+    
+    <div class="centro">
+      <div class="logo">
+        <img src="assets/Img/logof.jpg" alt="Logo Empresa" />
       </div>
-      <script src="assets/JS/footer.js"></script>
-    </footer>
-  </body>
+      <a href="Sobrenos.html" class="botao-sobre">Sobre Nós</a>
+    </div>
+
+    <div class="display-info" id="displayClimaTopo">-- °C</div>
+  </header>
+
+  <!-- ========== ÁREA PRINCIPAL ========== -->
+  <main class="area-principal">
+    <div class="conteudo-centro">
+
+      <!-- Painel ESQUERDO: Senhas em Espera -->
+      <section class="painel-lateral">
+        <h3>Senhas em Espera</h3>
+        <ul id="senhasEspera" class="lista-senhas">
+          <!-- Preenchido via JavaScript -->
+        </ul>
+      </section>
+
+      <!-- Painel CENTRAL: Senha Atual + Botões -->
+      <section class="painel-centro">
+        <h2>Senha Atual</h2>
+        <div id="senhaAtual" class="campo-senha-atual">—</div>
+        <button id="btnChamarProxima" class="btn-chamar">Chamar Nova Senha</button>
+        <button id="btnResetar" class="btn-resetar">Resetar Tudo</button>
+      </section>
+
+      <!-- Painel DIREITO: Senhas Atendidas -->
+      <section class="painel-lateral">
+        <h3>Senhas Atendidas</h3>
+        <ul id="senhasAtendidas" class="lista-senhas">
+          <!-- Preenchido via JavaScript -->
+        </ul>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ========== RODAPÉ ========== -->
+  <footer class="barra-rodape">
+    <div class="display-info" id="displayDataHoraRodape">--:-- --/--/----</div>
+
+    <div class="centro">
+      <div class="logo">
+        <img src="assets/Img/logof.jpg" alt="Logo Empresa" />
+      </div>
+      <a href="Sobrenos.html" class="botao-sobre">Sobre Nós</a>
+    </div>
+
+    <div class="display-info" id="displayClimaRodape">-- °C</div>
+  </footer>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script src="assets/JS/footer.js"></script>
+  <script src="assets/JS/gerenciador.js"></script>
+</body>
 </html>
