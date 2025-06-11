@@ -158,8 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextBtn = document.getElementById('prox-video-btn');
     
     // NOVO: Chaves para o localStorage
-    const listKey = 'videoCarouselList';
-    const indexKey = 'videoCarouselIndex';
+    const listKey = 'videoCarrosselList';
+    const indexKey = 'videoCarrosselIndex';
 
     // Função para renderizar a lista de vídeos no painel de controle
     const renderControlList = () => {

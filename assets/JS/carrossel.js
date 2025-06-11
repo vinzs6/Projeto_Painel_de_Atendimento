@@ -1,10 +1,11 @@
-// Carrossel de url do YouTube ultilizando localStorage
 document.addEventListener('DOMContentLoaded', () => {
-    const carouselContainer = document.getElementById('carousel-container');
+    const carouselContainer = document.getElementById('carrossel-container');
     const placeholderHtml = carouselContainer.innerHTML;
-    // NOVO: Chaves para o localStorage
-    const listKey = 'videoCarouselList';
-    const indexKey = 'videoCarouselIndex';
+
+    // Chaves para o localStorage (devem ser as mesmas do gerenciador.js)
+    const listKey = 'videoCarrosselList';
+    const indexKey = 'videoCarrosselIndex';
+
     let videos = [];
     let currentIndex = 0;
     let carouselInterval;
@@ -21,32 +22,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // Função para renderizar o carrossel
     const renderCarousel = () => {
         clearInterval(carouselInterval);
-        carouselContainer.innerHTML = ''; 
+        carouselContainer.innerHTML = '';
 
         if (videos.length === 0) {
             carouselContainer.innerHTML = placeholderHtml;
             return;
         }
 
-        videos.forEach((url, index) => {
+        videos.forEach((url) => {
             const videoId = getYouTubeID(url);
             if (videoId) {
                 const slide = document.createElement('div');
-                slide.className = 'carousel-slide';
-                const iframeSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0`;
-                slide.innerHTML = `<iframe src="${iframeSrc}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+                slide.className = 'carrossel-slide';
+
+                // ** CORREÇÃO CRÍTICA **
+                // A linha abaixo foi alterada para remover `loop=1` e `playlist=...`.
+                // Isto permite que o nosso script controle a troca, e não o YouTube.
+                const iframeSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&rel=0`;
+
+                slide.innerHTML = `<iframe src="${iframeSrc}" allow="autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
                 carouselContainer.appendChild(slide);
             }
         });
-        
-        // Exibe o slide correto e inicia o timer
+
         showSlide(currentIndex);
         startCarousel();
     };
-    
-    // Função para mostrar o slide correto
+
+    // Função para mostrar o slide correto (usando a classe .active)
     const showSlide = (index) => {
-        const slides = document.querySelectorAll('.carousel-slide');
+        const slides = document.querySelectorAll('.carrossel-slide');
         if (slides[index]) {
             slides.forEach((slide, i) => {
                 slide.classList.toggle('active', i === index);
@@ -54,47 +59,39 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Função para iniciar ou reiniciar o ciclo do carrossel
+    // Função para iniciar o ciclo do carrossel
     const startCarousel = () => {
-        clearInterval(carouselInterval); // Limpa o timer anterior
-        const slides = document.querySelectorAll('.carousel-slide');
+        clearInterval(carouselInterval);
+        const slides = document.querySelectorAll('.carrossel-slide');
+        // Só ativa o temporizador se houver mais de um vídeo
         if (slides.length > 1) {
+            // NOTA: A troca ocorrerá a cada 15s, independente da duração do vídeo.
             carouselInterval = setInterval(() => {
                 currentIndex = (currentIndex + 1) % slides.length;
                 showSlide(currentIndex);
-                localStorage.setItem(indexKey, currentIndex); // Sincroniza o índice
-            }, 15000);
+                localStorage.setItem(indexKey, currentIndex);
+            }, 15000); // 15 segundos
         }
     };
-    
-    // Função principal para carregar e atualizar
+
+    // Função principal para carregar dados do localStorage e renderizar
     const loadAndRender = () => {
         const storedVideos = localStorage.getItem(listKey);
         videos = storedVideos ? JSON.parse(storedVideos) : [];
-        // Carrega o índice salvo ou começa do zero
         currentIndex = parseInt(localStorage.getItem(indexKey)) || 0;
+        if (currentIndex >= videos.length) {
+            currentIndex = 0;
+        }
         renderCarousel();
     };
 
-    // Ouve por mudanças no localStorage feitas por outras abas
+    // "Ouve" por mudanças feitas em outras abas (o painel de gerenciamento)
     window.addEventListener('storage', (event) => {
-        // Se a lista de vídeos mudar, recarrega tudo
-        if (event.key === listKey) {
-            console.log('Lista de vídeos atualizada. Recarregando...');
+        if (event.key === listKey || event.key === indexKey) {
             loadAndRender();
-        }
-        // Se apenas o índice mudar, só troca o slide
-        if (event.key === indexKey) {
-            console.log('Índice do vídeo atualizado.');
-            const newIndex = parseInt(event.newValue) || 0;
-            if (newIndex !== currentIndex) {
-                currentIndex = newIndex;
-                showSlide(currentIndex);
-                // Reinicia o timer para dar tempo ao novo vídeo
-                startCarousel(); 
-            }
         }
     });
 
+    // Carga inicial quando a página abre
     loadAndRender();
 });
