@@ -1,162 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de Atendimento</title>
-    <!-- Adicione os links para as bibliotecas do Bootstrap aqui -->
- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel de Atendimento</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <style>
+    iframe {
+      pointer-events: none;
+    }
+  </style>
 </head>
 <body>
-    <!-- Cabeçalho -->
-    <header class="bg-primary text-white text-center py-3">
-        <h1>Painel de Atendimento</h1>
-    </header>
 
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Painel de Entrada das Senhas -->
-            <div class="col-md-4">
-                <div class="card mt-3">
-                    <div class="card-header bg-info text-white">
-                        <h2>Painel de Entrada de Senhas</h2>
-                    </div>
-                    <div class="card-body">
-                        <!-- Adicione o formulário ou componentes para entrada de senhas aqui -->
-                    </div>
+  <header class="bg-primary text-white text-center py-3">
+    <h1>Painel de Atendimento</h1>
+  </header>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Entrada de Senhas -->
+      <div class="col-md-4">
+        <div class="card mt-3">
+          <div class="card-header bg-info text-white">
+            <h2>Painel de Entrada de Senhas</h2>
+          </div>
+          <div class="card-body"></div>
+        </div>
+      </div>
+
+      <!-- Carrossel de Vídeos -->
+      <div class="col-md-4">
+        <div class="card mt-3">
+          <div class="card-header bg-secondary text-white">
+            <h2>Mídia</h2>
+          </div>
+          <div class="card-body">
+            <div id="videoCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <div id="player1"></div>
+                  </div>
                 </div>
+                <div class="carousel-item">
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <div id="player2"></div>
+                  </div>
+                </div>
+                <div class="carousel-item">
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <div id="player3"></div>
+                  </div>
+                </div>
+                <div class="carousel-item">
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <div id="player4"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- Setas removidas -->
             </div>
+          </div>
+        </div>
+      </div>
 
-            <!-- Vídeo ou Carrossel de Mídia -->
-            <div class="col-md-4">
-                <div class="card mt-3">
-                    <div class="card-header bg-secondary text-white">
-                        <h2>Mídia</h2>
-                    </div>
-                    <div class="card-body">
-                        <div id="videoCarousel" class="carousel slide" data-ride="carousel">
-                            <div class="carousel-inner">
-
-
-
-<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <video width="100%" controls ="autoplay">
-        <source src="videos/video1.mp4" type="video/mp4">
-        
-      </video>
+      <!-- Atendimento de Senhas -->
+      <div class="col-md-4">
+        <div class="card mt-3">
+          <div class="card-header bg-success text-white">
+            <h2>Painel de Atendimento de Senhas</h2>
+          </div>
+          <div class="card-body"></div>
+        </div>
+      </div>
     </div>
-    <div class="carousel-item">
-      <video width="100%" controls ="autoplay">
-        <source src="videos/video2.mp4" type="video/mp4">
-       
-      </video>
-    </div>
-    <div class="carousel-item">
-      <video width="100%" controls ="autoplay">
-        <source src="videos/video3.mp4" type="video/mp4">
-      
-      </video>
-      
+
+    <!-- Painel Atual -->
+    <div class="row mt-4">
+      <div class="col">
+        <div class="card">
+          <div class="card-header bg-warning">
+            <h2>Painel Atual</h2>
+          </div>
+          <div class="card-body"></div>
+        </div>
+      </div>
     </div>
   </div>
-  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Anterior</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Próximo</span>
-  </a>
-</div>
-<!-- Incluindo jQuery e Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
 
+  <script>
+    const videoIDs = ['4QcsOXY8t5w', '58hzCNclgYo', 'toLUwj0ZGhI', 'abmkaEhyNP0'];
+    const players = [];
 
-                                <!-- Adicione cada vídeo como um item do carrossel -->
-                               
-                                <div class="carousel-item">
-                                    <video width="100%" controls="autoplay">
-                                        <source src="C:\Users\pablo\Downloads\video2.mp4" type="video/mp4">
-                                    </video>
-                                </div>
-                                <div class="carousel-item">
-                                    <video width="100%" controls="autoplay">
-                                        <source src="C:\Users\pablo\Downloads\video3.mp4" type="video/mp4">
-                                    </video>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    function onYouTubeIframeAPIReady() {
+      for (let i = 0; i < videoIDs.length; i++) {
+        players[i] = new YT.Player(`player${i + 1}`, {
+          videoId: videoIDs[i],
+          playerVars: {
+            autoplay: 0,
+            mute: 1,
+            controls: 0,
+            modestbranding: 1,
+            rel: 0
+          },
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+    }
 
-            <!-- Painel de Atendimento das Senhas -->
-            <div class="col-md-4">
-                <div class="card mt-3">
-                    <div class="card-header bg-success text-white">
-                        <h2>Painel de Atendimento de Senhas</h2>
-                    </div>
-                    <div class="card-body">
-                        <!-- Adicione o componente para mostrar as senhas sendo atendidas aqui -->
-                    </div>
-                </div>
-            </div>
-        </div>
+    function onPlayerReady(event) {
+      const index = players.findIndex(p => p === event.target);
+      // Só o primeiro slide começa automaticamente
+      if (index === 0) {
+        event.target.playVideo();
+      }
+    }
 
-        <!-- Painel Atual (quem acabou de chegar e quem está sendo atendido) -->
-        <div class="row mt-4">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header bg-warning">
-                        <h2>Painel Atual</h2>
-                    </div>
-                    <div class="card-body">
-                        <!-- Adicione o componente para mostrar quem chegou e quem está sendo atendido aqui -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        const $items = $('#videoCarousel .carousel-item');
+        const $active = $('#videoCarousel .carousel-item.active');
+        const currentIndex = $items.index($active);
+        const nextIndex = (currentIndex + 1) % $items.length;
+        $('#videoCarousel').carousel(nextIndex);
+      }
+    }
 
-    <!-- Scripts do Bootstrap (jQuery e Popper.js são necessários para o Bootstrap) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
+    // Ao trocar o slide, para todos e toca o novo
+    $('#videoCarousel').on('slid.bs.carousel', function (e) {
+      const newIndex = $(e.relatedTarget).index();
+      players.forEach(player => {
+        if (player && player.pauseVideo) player.pauseVideo();
+      });
+      if (players[newIndex] && players[newIndex].playVideo) {
+        players[newIndex].seekTo(0);
+        players[newIndex].playVideo();
+      }
+    });
+  </script>
 
-    <script>
-        // Inicializa o carrossel
-        $('#videoCarousel').carousel();
-
-        // Lista de vídeos na pasta raiz
-        var videos = ["video1.mp4", "video2.mp4", "video3.mp4"];
-
-        // Embaralha a lista de vídeos
-        for (var i = videos.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            [videos[i], videos[j]] = [videos[j], videos[i]];
-        }
-
-        // Preenche os itens do carrossel com vídeos aleatórios
-        for (var i = 0; i < videos.length; i++) {
-            var videoItem = document.createElement("div");
-            videoItem.classList.add("carousel-item");
-            if (i === 0) {
-                videoItem.classList.add("active");
-            }
-            var video = document.createElement("video");
-            video.setAttribute("width", "100%");
-            video.setAttribute("controls", "controls");
-            var source = document.createElement("source");
-            source.setAttribute("src", videos[i]);
-            source.setAttribute("type", "video/mp4");
-            video.appendChild(source);
-            videoItem.appendChild(video);
-            document.querySelector(".carousel-inner").appendChild(videoItem);
-        }
-    </script>
 </body>
 </html>
