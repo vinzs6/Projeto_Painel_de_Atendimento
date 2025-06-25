@@ -1,312 +1,213 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-i18n="title">Gerar Senha</title>
-    <link rel="stylesheet" href="assets/CSS/Style.css" />
-    <link rel="stylesheet" href="assets/CSS/footer.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
-    />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> 
-  </head>
+<script>
+// Máscaras para os campos
+$(document).ready(function(){
+    $('#cpf').mask('000.000.000-00');
+    $('#cep').mask('00000-000');
+});
 
-  <body>
-    <!--Introdução-->
-    <div class="introducao" style="text-align: center">
-      <h1 class="mensagem-introducao">
-        <span class="mensagem" style="margin-top: 1px;" data-i18n="welcome">seja Bem-Vindo á</span><br />
-        <span class="mensagem"><h1><strong>Safekeep</strong></h1></span><br/><br/>
-        <span class="mensagem"><h4 data-i18n="hospitalDescription">O Hospital SafeKeep é
-           referência em cuidado seguro e humanizado,
-            unindo tecnologia avançada e profissionais
-             experientes para oferecer excelência em saúde.</h4></span><br/>
-
-           <span class="mensagem" style=" position: absolute; bottom: -200px;left:45%; background: rgba(28, 27, 27, 0.612); color: rgba(194, 184, 184, 0.859); border-radius: 40px; padding: 20px;">
-            <i class="fa-solid fa-fingerprint"style="font-size: 64px;"></i>
-          </span>
-    </div>
-
-    <!--Header-->
-   <header>
-        <div class="header-1">
-            <div class="cont-logo">
-                <img src="assets/Img/logof.jpg" width="55px" alt="Logo da Empresa" />
-            </div>
-        </div>
-        
-        <!-- Seletor de idiomas estilizado -->
-        <div class="multilingua">
-            <select id="multilingua">
-                <option value="pt">Português</option>
-                <option value="en">English</option>
-            </select>
-        </div>
-        <br>
-    </header>
-<br><br><br>
-
-    <!--Conteudo do site-->
-
-  <div class="container-senha">
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center flex-wrap">
-            <a class="square" data-bs-toggle="modal" data-bs-target="#serviceModal">
-                <i class="bi bi-heart-pulse"></i>
-                <h5 data-i18n="medicalConsultation">Consulta Médica</h5>
-            </a>
-            <a class="square" data-bs-toggle="modal" data-bs-target="#serviceModal">
-                <i class="bi bi-arrow-repeat"></i>
-                <h5 data-i18n="retorno">Retorno</h5>
-            </a>
-        </div>
-        <div class="col-12 d-flex justify-content-center flex-wrap">
-            <a class="square" data-bs-toggle="modal" data-bs-target="#serviceModal">
-                <i class="bi bi-exclamation-triangle"></i>
-                <h5 data-i18n="urgencia">Urgência</h5>
-            </a>
-            <a class="square" data-bs-toggle="modal" data-bs-target="#serviceModal">
-                <i class="bi bi-exclamation-octagon-fill"></i>
-                <h5 data-i18n="emergency">Emergência</h5>
-            </a>
-        </div>
-        <div class="col-12 d-flex justify-content-center flex-wrap">
-            <a class="square" data-bs-toggle="modal" data-bs-target="#serviceModal">
-                <i class="bi bi-clipboard2-pulse"></i>
-                <h5 data-i18n="exams">Exames</h5>
-            </a>
-            <a class="square" data-bs-toggle="modal" data-bs-target="#serviceModal">
-                <i class="bi bi-capsule"></i>
-                <h5 data-i18n="pharmacy">Farmácia</h5>
-            </a>
-        </div>
-    </div>
-</div>
-
-<!-- Modal -->
-
-<div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content border border-black">
-            <div class="modal-header  text-black border border-black">
-                <h5 class="modal-title" data-i18n="serviceScheduling">Agendamento de Serviço</h5>
-                <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="serviceForm" class="row g-3 needs-validation" novalidate>
-                    <div class="col-md-6">
-                        <label for="validationCustom01" class="form-label" data-i18n="firstName">Nome</label>
-                        <input type="text" class="form-control" id="validationCustom01" required>
-                        <div class="valid-feedback" data-i18n="ok">Ok!</div>
-                        <div class="invalid-feedback" data-i18n="pleaseEnterName">Por favor, informe seu nome.</div>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="validationCustom02" class="form-label" data-i18n="lastName">Sobrenome</label>
-                        <input type="text" class="form-control" id="validationCustom02" required>
-                        <div class="valid-feedback" data-i18n="ok">Ok!</div>
-                        <div class="invalid-feedback" data-i18n="pleaseEnterLastName">Por favor, informe seu sobrenome.</div>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="cpf" class="form-label">CPF</label>
-                        <input type="text" class="form-control" id="cpf" placeholder="000.000.000-00" required>
-                        <div class="invalid-feedback" id="cpfFeedback" data-i18n="pleaseEnterValidCPF">Por favor, informe um CPF válido.</div>
-                    </div>
-                     <div class="col-md-6">
-                        <label for="cep" class="form-label">CEP</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="cep" placeholder="00000-000" required>
-                            <button class="btn btn-outline-secondary" type="button" id="searchCep" data-i18n="search">Buscar</button>
-                        </div>
-                        <div class="invalid-feedback" id="cepFeedback" data-i18n="pleaseEnterValidCEP">Por favor, informe um CEP válido e clique em buscar.</div>
-                        <div class="valid-feedback" id="cepSuccess" data-i18n="validCEP">CEP válido!</div>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="logradouro" class="form-label" data-i18n="street">Logradouro</label>
-                        <input type="text" class="form-control" id="logradouro" readonly>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="bairro" class="form-label" data-i18n="neighborhood">Bairro</label>
-                        <input type="text" class="form-control" id="bairro" readonly>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="localidade" class="form-label" data-i18n="city">Cidade</label>
-                        <input type="text" class="form-control" id="localidade" readonly>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="uf" class="form-label" data-i18n="state">UF</label>
-                        <input type="text" class="form-control" id="uf" readonly>
-                    </div>
-                    <div class="col-12">
-                        <button class="btn w-100 py-2 border border-black" type="submit" data-i18n="generateTicket">Gerar Senha</button>
-                    </div>
-                </form>
-
-                <!-- Tela de Senha -->
-                <div id="ticketScreen" class="text-center py-4 d-none">
-                    <div class="ticket-container bg-light p-4 rounded-3 mb-3">
-                        <h3 class="text-primary" data-i18n="yourTicket">Sua Senha</h3>
-                        <div class="ticket-number display-4 fw-bold text-danger my-4" id="generatedTicket">A123</div>
-                        <p class="text-muted" data-i18n="pleaseWait">Por favor, aguarde seu atendimento</p>
-                    </div>
-                    <div class="printing-message alert alert-info d-none" id="printingMessage">
-                        <div class="spinner-border spinner-border-sm me-2" role="status">
-                            <span class="visually-hidden">Carregando...</span>
-                        </div>
-                        <span data-i18n="printing">IMPRIMINDO...</span>
-                    </div>
-                </div>
-
-                <!-- Avaliação -->
-                <div id="ratingScreen" class="text-center py-4 d-none">
-                    <h4 class="mb-4" data-i18n="rateOurService">Avalie nosso atendimento</h4>
-                    <div class="star-rating mb-3">
-                        <i class="bi bi-star-fill star-icon fs-1" data-rating="1"></i>
-                        <i class="bi bi-star-fill star-icon fs-1" data-rating="2"></i>
-                        <i class="bi bi-star-fill star-icon fs-1" data-rating="3"></i>
-                        <i class="bi bi-star-fill star-icon fs-1" data-rating="4"></i>
-                        <i class="bi bi-star-fill star-icon fs-1" data-rating="5"></i>
-                    </div>
-                    <button id="finishButton" class="btn btn-outline-secondary" data-i18n="finish">Finalizar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-    <br><br><br>
-
-    <!--Rodapé-->
-
-    <footer>
-      <div class="footer">
-        <div class="f-1">
-          <div id="dataHora">--:-- --/--/----</div>
-        </div>
-        <div class="f-2">
-          <div class="logo">
-            <img src="assets/Img/logof.jpg" width="55px" alt="Logo da Empresa" />
-          </div>
-        </div>
-        <div class="f-1">
-          <div id="clima">-- °C</div>
-        </div>
-      </div>
-      </div>
-      <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-        crossorigin="anonymous"
-      ></script>
-      <script src="assets/JS/footer.js"></script>
-    </footer>
-    <script src="https://kit.fontawesome.com/3ff209a527.js" crossorigin="anonymous"></script>
-    <script src="assets/JS/Gerar-senha"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+// Função para gerar senha aleatória
+function generateRandomTicket(serviceType) {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
     
-    <!-- Internationalization Script -->
-    <script>
-      // Translation dictionary
-      const translations = {
-        'pt': {
-          'title': 'Gerar Senha',
-          'welcome': 'seja Bem-Vindo á',
-          'hospitalDescription': 'O Hospital SafeKeep é referência em cuidado seguro e humanizado, unindo tecnologia avançada e profissionais experientes para oferecer excelência em saúde.',
-          'medicalConsultation': 'Consulta Médica',
-          'retorno': 'Retorno',
-          'urgencia': 'Urgência',
-          'emergency': 'Emergência',
-          'exams': 'Exames',
-          'pharmacy': 'Farmácia',
-          'serviceScheduling': 'Agendamento de Serviço',
-          'firstName': 'Nome',
-          'lastName': 'Sobrenome',
-          'ok': 'Ok!',
-          'pleaseEnterName': 'Por favor, informe seu nome.',
-          'pleaseEnterLastName': 'Por favor, informe seu sobrenome.',
-          'pleaseEnterValidCPF': 'Por favor, informe um CPF válido.',
-          'search': 'Buscar',
-          'pleaseEnterValidCEP': 'Por favor, informe um CEP válido e clique em buscar.',
-          'validCEP': 'CEP válido!',
-          'street': 'Logradouro',
-          'neighborhood': 'Bairro',
-          'city': 'Cidade',
-          'state': 'UF',
-          'generateTicket': 'Gerar Senha',
-          'yourTicket': 'Sua Senha',
-          'pleaseWait': 'Por favor, aguarde seu atendimento',
-          'printing': 'IMPRIMINDO...',
-          'rateOurService': 'Avalie nosso atendimento',
-          'finish': 'Finalizar'
-        },
-        'en': {
-          'title': 'Generate Ticket',
-          'welcome': 'Welcome to',
-          'hospitalDescription': 'SafeKeep Hospital is a reference in safe and humanized care, combining advanced technology and experienced professionals to offer excellence in healthcare.',
-          'medicalConsultation': 'Medical Consultation',
-          'retorno': 'Follow-up',
-          'urgencia': 'Urgency',
-          'emergency': 'Emergency',
-          'exams': 'Exams',
-          'pharmacy': 'Pharmacy',
-          'serviceScheduling': 'Service Scheduling',
-          'firstName': 'First Name',
-          'lastName': 'Last Name',
-          'ok': 'Ok!',
-          'pleaseEnterName': 'Please enter your first name.',
-          'pleaseEnterLastName': 'Please enter your last name.',
-          'pleaseEnterValidCPF': 'Please enter a valid CPF.',
-          'search': 'Search',
-          'pleaseEnterValidCEP': 'Please enter a valid ZIP code and click search.',
-          'validCEP': 'Valid ZIP code!',
-          'street': 'Street',
-          'neighborhood': 'Neighborhood',
-          'city': 'City',
-          'state': 'State',
-          'generateTicket': 'Generate Ticket',
-          'yourTicket': 'Your Ticket',
-          'pleaseWait': 'Please wait for your service',
-          'printing': 'PRINTING...',
-          'rateOurService': 'Rate our service',
-          'finish': 'Finish'
-        }
-      };
+    const randomLetter = letters.charAt(Math.floor(Math.random() * letters.length));
+    const randomNumbers = numbers.charAt(Math.floor(Math.random() * 10)) + 
+                         numbers.charAt(Math.floor(Math.random() * 10)) + 
+                         numbers.charAt(Math.floor(Math.random() * 10));
+    
+    return randomLetter + randomNumbers;
+}
 
-      // Function to change language
-      function changeLanguage(language) {
-        document.documentElement.lang = language === 'en' ? 'en' : 'pt-BR';
-        const elements = document.querySelectorAll('[data-i18n]');
-        
-        elements.forEach(element => {
-          const key = element.getAttribute('data-i18n');
-          if (translations[language] && translations[language][key]) {
-            element.textContent = translations[language][key];
-          }
+// Função para buscar CEP
+document.getElementById('searchCep').addEventListener('click', function() {
+    const cep = document.getElementById('cep').value.replace(/\D/g, '');
+    const cepInput = document.getElementById('cep');
+    const cepFeedback = document.getElementById('cepFeedback');
+    const cepSuccess = document.getElementById('cepSuccess');
+    
+    if (cep.length !== 8) {
+        cepInput.classList.add('is-invalid');
+        cepInput.classList.remove('is-valid');
+        cepFeedback.classList.remove('d-none');
+        cepSuccess.classList.add('d-none');
+        return;
+    }
+    
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.erro) {
+                cepInput.classList.add('is-invalid');
+                cepInput.classList.remove('is-valid');
+                cepFeedback.classList.remove('d-none');
+                cepSuccess.classList.add('d-none');
+            } else {
+                document.getElementById('logradouro').value = data.logradouro;
+                document.getElementById('bairro').value = data.bairro;
+                document.getElementById('localidade').value = data.localidade;
+                document.getElementById('uf').value = data.uf;
+                
+                cepInput.classList.remove('is-invalid');
+                cepInput.classList.add('is-valid');
+                cepFeedback.classList.add('d-none');
+                cepSuccess.classList.remove('d-none');
+            }
+        })
+        .catch(() => {
+            cepInput.classList.add('is-invalid');
+            cepInput.classList.remove('is-valid');
+            cepFeedback.classList.remove('d-none');
+            cepSuccess.classList.add('d-none');
         });
-      }
+});
 
-      // Language selector event
-      document.getElementById('multilingua').addEventListener('change', function() {
-        changeLanguage(this.value);
-      });
+// Validação de CPF
+function validateCPF(cpf) {
+    cpf = cpf.replace(/\D/g, '');
+    if (cpf.length !== 11) return false;
+    
+    // Verifica se todos os dígitos são iguais
+    if (/^(\d)\1{10}$/.test(cpf)) return false;
+    
+    // Validação do primeiro dígito verificador
+    let sum = 0;
+    for (let i = 0; i < 9; i++) {
+        sum += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+    let remainder = (sum * 10) % 11;
+    if (remainder === 10) remainder = 0;
+    if (remainder !== parseInt(cpf.charAt(9))) return false;
+    
+    // Validação do segundo dígito verificador
+    sum = 0;
+    for (let i = 0; i < 10; i++) {
+        sum += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+    remainder = (sum * 10) % 11;
+    if (remainder === 10) remainder = 0;
+    if (remainder !== parseInt(cpf.charAt(10))) return false;
+    
+    return true;
+}
 
-      // Initialize with Portuguese
-      changeLanguage('pt');
-    </script>
-  </body>
-</html>
+// Função para armazenar senha no LocalStorage
+function storePasswordInLocalStorage(password) {
+    // Recupera o array de senhas existente ou cria um novo
+    let passwords = JSON.parse(localStorage.getItem('generatedPasswords')) || [];
+    
+    // Adiciona a nova senha ao array
+    passwords.push(password);
+    
+    // Armazena o array atualizado no LocalStorage
+    localStorage.setItem('generatedPasswords', JSON.stringify(passwords));
+    
+    // Retorna o índice da senha (posição no array)
+    return passwords.length - 1;
+}
+
+// Função para recuperar senha do LocalStorage pelo índice
+function getPasswordFromLocalStorage(index) {
+    const passwords = JSON.parse(localStorage.getItem('generatedPasswords')) || [];
+    if (index >= 0 && index < passwords.length) {
+        return passwords[index];
+    }
+    return null;
+}
+
+// Formulário de serviço
+document.getElementById('serviceForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const form = this;
+    const cpfInput = document.getElementById('cpf');
+    const cpf = cpfInput.value;
+    
+    // Valida CPF
+    if (!validateCPF(cpf)) {
+        cpfInput.classList.add('is-invalid');
+        return;
+    }
+    
+    // Valida CEP
+    const cep = document.getElementById('cep').value.replace(/\D/g, '');
+    if (cep.length !== 8) {
+        document.getElementById('cep').classList.add('is-invalid');
+        return;
+    }
+    
+    if (form.checkValidity()) {
+        form.classList.add('was-validated');
+        
+        // Gera a senha
+        const serviceType = "Consulta"; // Você pode ajustar isso para pegar o tipo de serviço selecionado
+        const generatedTicket = generateRandomTicket(serviceType);
+        
+        // Armazena a senha no LocalStorage e obtém o índice
+        const passwordIndex = storePasswordInLocalStorage(generatedTicket);
+        console.log(`Senha armazenada no índice ${passwordIndex}: ${generatedTicket}`);
+        
+        // Exibe a senha gerada
+        document.getElementById('generatedTicket').textContent = generatedTicket;
+        document.getElementById('ticketScreen').classList.remove('d-none');
+        form.classList.add('d-none');
+        
+        // Simula impressão
+        document.getElementById('printingMessage').classList.remove('d-none');
+        setTimeout(() => {
+            document.getElementById('printingMessage').classList.add('d-none');
+            document.getElementById('ratingScreen').classList.remove('d-none');
+        }, 2000);
+    }
+});
+
+// Avaliação por estrelas
+document.querySelectorAll('.star-icon').forEach(star => {
+    star.addEventListener('click', function() {
+        const rating = this.getAttribute('data-rating');
+        const stars = document.querySelectorAll('.star-icon');
+        
+        stars.forEach((s, index) => {
+            if (index < rating) {
+                s.classList.add('text-warning');
+            } else {
+                s.classList.remove('text-warning');
+            }
+        });
+    });
+});
+
+// Botão de finalizar
+document.getElementById('finishButton').addEventListener('click', function() {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('serviceModal'));
+    modal.hide();
+    
+    // Reseta o formulário
+    document.getElementById('serviceForm').reset();
+    document.getElementById('serviceForm').classList.remove('was-validated', 'd-none');
+    document.getElementById('ticketScreen').classList.add('d-none');
+    document.getElementById('ratingScreen').classList.add('d-none');
+    
+    // Reseta as estrelas
+    document.querySelectorAll('.star-icon').forEach(star => {
+        star.classList.remove('text-warning');
+    });
+    
+    // Reseta os campos de endereço
+    document.getElementById('logradouro').value = '';
+    document.getElementById('bairro').value = '';
+    document.getElementById('localidade').value = '';
+    document.getElementById('uf').value = '';
+    
+    // Reseta a validação do CEP
+    document.getElementById('cep').classList.remove('is-valid', 'is-invalid');
+    document.getElementById('cepSuccess').classList.add('d-none');
+    document.getElementById('cepFeedback').classList.add('d-none');
+    
+    // Reseta a validação do CPF
+    document.getElementById('cpf').classList.remove('is-invalid');
+});
+
+// Inicializa o modal
+var serviceModal = new bootstrap.Modal(document.getElementById('serviceModal'));
+</script>
