@@ -1,0 +1,177 @@
+/*Estilo do gerenciador.html*/
+/* RESET GERAL */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* TOPO E RODAPÉ */
+.barra-topo{
+  background-color: #c8d8e4;
+  padding: 2px;
+  align-items: center;
+}
+.barra-rodape {
+  background-color: #c8d8e4;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.display-info {
+  background-color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 15px;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  min-width: 140px;
+  text-align: center;
+}
+
+.centro {
+  text-align: center;
+}
+
+.logo img {
+  width: 100px; 
+  height: 100px;
+  border-radius: 50%;
+  object-fit: contain; 
+  border: 3px solid #0050a0;
+  background-color: #fff; 
+  padding: 5px; 
+}
+
+.botao-sobre {
+  display: inline-block;
+  margin-top: 8px;
+  background-color: #0050a0;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+.botao-sobre:hover {
+  background-color: #003f87;
+}
+
+/* ÁREA PRINCIPAL */
+.area-principal {
+  padding: 40px 20px;
+  background-color: #f0f2f5;
+  display: flex;
+  justify-content: center;
+}
+
+.conteudo-centro {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1400px;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* CARDS PAINEL */
+.painel-lateral,
+.painel-centro {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: all 0.3s ease;
+}
+
+.painel-lateral:hover,
+.painel-centro:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.painel-lateral h3,
+.painel-centro h2 {
+  color: #0050a0;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* LISTAS DE SENHAS */
+.lista-senhas,
+.video-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* SENHA ATUAL */
+.campo-senha-atual {
+  background-color: #0050a0;
+  color: #fff;
+  font-size: 2.5em;
+  font-weight: bold;
+  padding: 30px;
+  border-radius: 12px;
+  margin: 20px 0;
+  text-align: center;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* BOTÕES */
+.btn-chamar,
+.btn-resetar{
+  background-color: #1e74c1;
+  color: white;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 20px;
+  margin: 8px auto;
+  width: 80%;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-chamar:hover,
+.btn-resetar:hover {
+  background-color: #155b9d;
+  transform: translateY(-2px);
+}
+
+/* RESPONSIVO */
+@media (max-width: 992px) {
+  .conteudo-centro {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .painel-lateral,
+  .painel-centro {
+    width: 100%;
+  }
+
+  .btn-chamar,
+  .btn-resetar {
+    width: 100%;
+  }
+}

@@ -1,53 +1,157 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Painel de atendimento</title>
+    <title>Painel de Atendimento</title>
     <link rel="stylesheet" href="assets/CSS/Style.css" />
-    <link rel="stylesheet" href="assets/CSS/footer-2.css" />
-  </head>
+    <link rel="stylesheet" href="assets/CSS/footer.css" />
+    
+    <style>
+      body{
+        background-color: #ffffff;
+      }
+         #carrossel-container {
+            width: 60%; 
+            height: 60vh; 
+            position: relative; 
+            background-color: #000;
+        }
+        iframe {
+            pointer-events: none;
+        }
+        .carrossel-slide {
+            display: none; 
+            width: 100%;
+            height: 100%;
+        }
+        .carrossel-slide.active {
+            display: block;
+        }
+        .carrossel-slide iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .area-principal {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        }
+        .area-senha {
+            text-align: center;
+            width: 40%;
+            background-color: #f0f0f0;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .senha-under-left, .senha-under-right {
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            flex-direction: row;
+            width: 50%;
+            background-color: #f0f0f0;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 
-  <body>
-    <!--Rodapé-->
+        }
+        .senha-under-left {
+            float: left;
+            margin-right: auto;
+            height: 150%;
+        }
+        .senha-under-right {
+            float: right;
+            margin-left: auto;
+            margin-right: 0;
+        }
+        .header{
+            background-color: #c8d8e4;
+            padding: 2px;
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="centro">
+      <div class="logo">
+        <img src="assets/Img/logof.jpg" alt="Logo Empresa" />
+      </div>
+  </header>
+
+<!--Area video -->
+  <div class="area-principal">
+        <div id="carrossel-container">
+            <div id="placeholder">
+                <h2>Nenhum vídeo adicionado.</h2>
+            </div>
+        </div>
+<!--Fim da area video -->
+
+<!--Area Senha atual, lateral do painel-->
+        <div class="area-senha">
+          <div class="senhaAtual">
+            <div class="titulo"><b>Senha Atual: </b></div><br>
+            <div class="senha" id="senha">---</div><br>
+            <div class="progresso-container">
+                <div class="progresso-barra" id="progresso"></div>
+            </div>
+          </div>  
+            <div class="tempo-restante" id="tempo-restante">Próxima senha em 5s</div><br>
+        </div>
+        </div>
+
+<!--Area Senha, parte baixa-->
+          <div class="senha-under-left">
+            <div class="titulo"><b>Próxima Senha: </b></div><br>
+            <div class="senha" id="proxima-senha">---</div><br>
+            <div class="progresso-container">
+                <div class="progresso-barra" id="progresso-proxima"></div>
+            </div>
+          </div>
+
+          <div class="senha-under-right">
+            <div class="titulo"><b>Senha Anterior: </b></div><br>
+            <div class="senha" id="proxima-senha">---</div><br>
+            <div class="progresso-container">
+                <div class="progresso-barra" id="progresso-proxima"></div>
+            </div>
+          </div>
+          
+
+
+  <!-- RODAPÉ -->
     <footer>
       <div class="footer">
         <div class="f-1">
-          <!-- <div id="hora">hora</div> -->
-          <div id="dataHora">data</div>
+          <div id="dataHora">--:-- --/--/----</div>
         </div>
-
-        <!-----Senha Atual----->
-        
-        <div class="ultimas-senhas">
-          <div class="ultima-senha ultima-normal">
-          <div class="label">Última Normal</div>
-          <div id="ultimaNormal">-</div>
+        <h4 style= "white-space: nowrap; text-align: center;">Escaneie o QR Code</br>E conheça a SAFEkeep </h4>
+        <div class="qrcode">
+          <img src="assets/Img/sobrenos.png" width="55px" alt="QRcode Sobre nos"/> 
         </div>
-
-        <!--------------------->
         <div class="f-2">
           <div class="logo">
             <img src="assets/Img/logof.jpg" width="55px" alt="Logo da Empresa" />
           </div>
         </div>
-        <!--------------------->
-        <h6>Conheça a SAFEkeep:</h6>
+        
+    <h4 style= "white-space: nowrap; text-align: center;">Envie-nos seu FeedBack</br>Escaneando o QR Code</h4>
         <div class="qrcode">
-          <img src="assets/Img/logo.png" width="55px" alt="QRcode Sobre nos"/> 
+          <img src="assets/Img/feedbackqrcode.png" width="55px" alt="QRcode FeedBack" />
         </div>
-
-        <h6>Deixe-nos sua avaliação: </h6>
-        <div class="qrcode">
-          <img src="assets/Img/logo.png" width="55px" alt="QRcode FeedBack"/>
-          
-        </div>
-        <!--------------------->
         <div class="f-1">
-          <div id="clima">clima</div>
+          <div id="clima">-- °C</div>
         </div>
       </div>
-      <script src="assets/JS/footer.js"></script>
     </footer>
-  </body>
+    <!-- RODAPÉ -->
+
+    <script src="assets/JS/footer.js"></script>
+    <script src="assets/JS/carrossel.js"></script>
+</body>
 </html>

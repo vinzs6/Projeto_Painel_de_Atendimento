@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<<<<<<< HEAD
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,10 +12,28 @@
   <!-- ========== CABEÇALHO ========== -->
   <div class="barra-topo">
     <div class="display-info" id="displayDataHoraTopo">--:-- --/--/----</div>
+=======
+ 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerenciador de Senhas</title>
+
+  <!-- Estilo principal -->
+  <link rel="stylesheet" href="assets/CSS/style-2.css" />
+
+  <!-- Fonte Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ========== CABEÇALHO ========== -->
+  <header class="barra-topo">
+>>>>>>> main
     <div class="centro">
       <div class="logo">
         <img src="assets/Img/logof.jpg" alt="Logo Empresa" />
       </div>
+<<<<<<< HEAD
       <a href="Sobrenos.html" class="botao-sobre">Sobre Nós</a>
     </div>
     <div class="display-info" id="displayClimaTopo">-- °C</div>
@@ -34,10 +53,29 @@
 
       <!-- Painel CENTRAL: Senha Atual + Botões -->
       <div class="painel-centro">
+=======
+  </header>
+
+  <!-- ========== ÁREA PRINCIPAL ========== -->
+  <main class="area-principal">
+    <div class="conteudo-centro">
+
+      <!-- Painel ESQUERDO: Senhas em Espera -->
+      <section class="painel-lateral">
+        <h3>Senhas em Espera</h3>
+        <ul id="senhasEspera" class="lista-senhas">
+          <!-- Preenchido via JavaScript -->
+        </ul>
+      </section>
+
+      <!-- Painel CENTRAL: Senha Atual + Botões -->
+      <section class="painel-centro">
+>>>>>>> main
         <h2>Senha Atual</h2>
         <div id="senhaAtual" class="campo-senha-atual">—</div>
         <button id="btnChamarProxima" class="btn-chamar">Chamar Nova Senha</button>
         <button id="btnResetar" class="btn-resetar">Resetar Tudo</button>
+<<<<<<< HEAD
       </div>
 
       <!-- Painel DIREITO: Senhas Atendidas -->
@@ -54,14 +92,65 @@
   <!-- ========== RODAPÉ ========== -->
   <div class="barra-rodape">
     <div class="display-info" id="displayDataHoraRodape">--:-- --/--/----</div>
+=======
+      </section>
+
+      <!-- Painel DIREITO: Senhas Atendidas -->
+      <section class="painel-lateral">
+        <h3>Senhas Atendidas</h3>
+        <ul id="senhasAtendidas" class="lista-senhas">
+          <!-- Preenchido via JavaScript -->
+        </ul>
+      </section>
+
+    </div>
+  </main>
+  <!-- ========== SEÇÃO DE VÍDEOS ========== -->
+  <div class="area-principal">  
+  <div class="conteudo-centro">
+    <section class="painel-lateral"> 
+      <div class="control-panel"  style="text-align: center;"> 
+        <h2>Adicionar Novo Vídeo</h2>
+        <div class="add-section">
+            <input type="text" id="video-url-input" placeholder="Cole a URL do vídeo do YouTube aqui">
+            <button id="add-video-btn" class="add-video-btn">Adicionar</button>
+        </div>
+    </section>
+    <section class="painel-centro">
+          <h2>Vídeos Atuais</h2>
+            <ul id="video-list" class="video-list">
+            </ul>
+          <h2>Navegação</h2>
+            <div class="navigation-section" style="text-align: center;">
+            <button id="ante-video-btn" class="ante-video-btn">⭠ Anterior</button>
+            <button id="prox-video-btn" class="ante-video-btn">Próximo ⭢</button>
+            </div>
+    </section>
+      </div>
+    </div>
+    
+
+    
+
+  <!-- ========== RODAPÉ ========== -->
+  <footer class="barra-rodape">
+    <div class="display-info" id="dataHora">--:-- --/--/----</div>
+
+>>>>>>> main
     <div class="centro">
       <div class="logo">
         <img src="assets/Img/logof.jpg" alt="Logo Empresa" />
       </div>
       <a href="Sobrenos.html" class="botao-sobre">Sobre Nós</a>
     </div>
+<<<<<<< HEAD
     <div class="display-info" id="displayClimaRodape">-- °C</div>
   </div>
+=======
+
+    <div class="display-info" id="clima">-- °C</div>
+  </footer>
+>>>>>>> main
 
   <!-- ========== SCRIPTS ========== -->
   <script src="assets/JS/footer.js"></script>
