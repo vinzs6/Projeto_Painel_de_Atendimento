@@ -160,7 +160,7 @@
                 <div id="ticketScreen" class="text-center py-4 d-none">
                     <div class="ticket-container bg-light p-4 rounded-3 mb-3">
                         <h3 class="text-primary" data-i18n="yourTicket">Sua Senha</h3>
-                        <div class="ticket-number display-4 fw-bold text-danger my-4" id="generatedTicket">A123</div>
+                        <div class="ticket-number display-4 fw-bold text-danger my-4" id="generatedTicket"></div>
                         <p class="text-muted" data-i18n="pleaseWait">Por favor, aguarde seu atendimento</p>
                     </div>
                     <div class="printing-message alert alert-info d-none" id="printingMessage">
@@ -287,7 +287,7 @@
         }
       };
 
-      // Function to change language
+      
       function changeLanguage(language) {
         document.documentElement.lang = language === 'en' ? 'en' : 'pt-BR';
         const elements = document.querySelectorAll('[data-i18n]');
@@ -300,12 +300,12 @@
         });
       }
 
-      // Language selector event
+      
       document.getElementById('multilingua').addEventListener('change', function() {
         changeLanguage(this.value);
       });
 
-      // Initialize with Portuguese
+      
       changeLanguage('pt');
     </script>
 
@@ -314,219 +314,7 @@
 
 
 
-    <script>
-// Máscaras para os campos
-$(document).ready(function(){
-    $('#cpf').mask('000.000.000-00');
-    $('#cep').mask('00000-000');
-});
-
-// Função para gerar senha aleatória
-function generateRandomTicket(serviceType) {
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const numbers = '0123456789';
-    
-    const randomLetter = letters.charAt(Math.floor(Math.random() * letters.length));
-    const randomNumbers = numbers.charAt(Math.floor(Math.random() * 10)) + 
-                         numbers.charAt(Math.floor(Math.random() * 10)) + 
-                         numbers.charAt(Math.floor(Math.random() * 10));
-    
-    return randomLetter + randomNumbers;
-}
-
-// Função para buscar CEP
-document.getElementById('searchCep').addEventListener('click', function() {
-    const cep = document.getElementById('cep').value.replace(/\D/g, '');
-    const cepInput = document.getElementById('cep');
-    const cepFeedback = document.getElementById('cepFeedback');
-    const cepSuccess = document.getElementById('cepSuccess');
-    
-    if (cep.length !== 8) {
-        cepInput.classList.add('is-invalid');
-        cepInput.classList.remove('is-valid');
-        cepFeedback.classList.remove('d-none');
-        cepSuccess.classList.add('d-none');
-        return;
-    }
-    
-    fetch(`https://viacep.com.br/ws/${cep}/json/`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.erro) {
-                cepInput.classList.add('is-invalid');
-                cepInput.classList.remove('is-valid');
-                cepFeedback.classList.remove('d-none');
-                cepSuccess.classList.add('d-none');
-            } else {
-                document.getElementById('logradouro').value = data.logradouro;
-                document.getElementById('bairro').value = data.bairro;
-                document.getElementById('localidade').value = data.localidade;
-                document.getElementById('uf').value = data.uf;
-                
-                cepInput.classList.remove('is-invalid');
-                cepInput.classList.add('is-valid');
-                cepFeedback.classList.add('d-none');
-                cepSuccess.classList.remove('d-none');
-            }
-        })
-        .catch(() => {
-            cepInput.classList.add('is-invalid');
-            cepInput.classList.remove('is-valid');
-            cepFeedback.classList.remove('d-none');
-            cepSuccess.classList.add('d-none');
-        });
-});
-
-// Validação de CPF
-function validateCPF(cpf) {
-    cpf = cpf.replace(/\D/g, '');
-    if (cpf.length !== 11) return false;
-    
-    // Verifica se todos os dígitos são iguais
-    if (/^(\d)\1{10}$/.test(cpf)) return false;
-    
-    // Validação do primeiro dígito verificador
-    let sum = 0;
-    for (let i = 0; i < 9; i++) {
-        sum += parseInt(cpf.charAt(i)) * (10 - i);
-    }
-    let remainder = (sum * 10) % 11;
-    if (remainder === 10) remainder = 0;
-    if (remainder !== parseInt(cpf.charAt(9))) return false;
-    
-    // Validação do segundo dígito verificador
-    sum = 0;
-    for (let i = 0; i < 10; i++) {
-        sum += parseInt(cpf.charAt(i)) * (11 - i);
-    }
-    remainder = (sum * 10) % 11;
-    if (remainder === 10) remainder = 0;
-    if (remainder !== parseInt(cpf.charAt(10))) return false;
-    
-    return true;
-}
-
-// Função para armazenar senha no LocalStorage
-function storePasswordInLocalStorage(password) {
-    // Recupera o array de senhas existente ou cria um novo
-    let passwords = JSON.parse(localStorage.getItem('generatedPasswords')) || [];
-    
-    // Adiciona a nova senha ao array
-    passwords.push(password);
-    
-    // Armazena o array atualizado no LocalStorage
-    localStorage.setItem('generatedPasswords', JSON.stringify(passwords));
-    
-    // Retorna o índice da senha (posição no array)
-    return passwords.length - 1;
-}
-
-// Função para recuperar senha do LocalStorage pelo índice
-function getPasswordFromLocalStorage(index) {
-    const passwords = JSON.parse(localStorage.getItem('generatedPasswords')) || [];
-    if (index >= 0 && index < passwords.length) {
-        return passwords[index];
-    }
-    return null;
-}
-
-// Formulário de serviço
-document.getElementById('serviceForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    const form = this;
-    const cpfInput = document.getElementById('cpf');
-    const cpf = cpfInput.value;
-    
-    // Valida CPF
-    if (!validateCPF(cpf)) {
-        cpfInput.classList.add('is-invalid');
-        return;
-    }
-    
-    // Valida CEP
-    const cep = document.getElementById('cep').value.replace(/\D/g, '');
-    if (cep.length !== 8) {
-        document.getElementById('cep').classList.add('is-invalid');
-        return;
-    }
-    
-    if (form.checkValidity()) {
-        form.classList.add('was-validated');
-        
-        // Gera a senha
-        const serviceType = "Consulta"; // Você pode ajustar isso para pegar o tipo de serviço selecionado
-        const generatedTicket = generateRandomTicket(serviceType);
-        
-        // Armazena a senha no LocalStorage e obtém o índice
-        const passwordIndex = storePasswordInLocalStorage(generatedTicket);
-        console.log(`Senha armazenada no índice ${passwordIndex}: ${generatedTicket}`);
-        
-        // Exibe a senha gerada
-        document.getElementById('generatedTicket').textContent = generatedTicket;
-        document.getElementById('ticketScreen').classList.remove('d-none');
-        form.classList.add('d-none');
-        
-        // Simula impressão
-        document.getElementById('printingMessage').classList.remove('d-none');
-        setTimeout(() => {
-            document.getElementById('printingMessage').classList.add('d-none');
-            document.getElementById('ratingScreen').classList.remove('d-none');
-        }, 2000);
-    }
-});
-
-// Avaliação por estrelas
-document.querySelectorAll('.star-icon').forEach(star => {
-    star.addEventListener('click', function() {
-        const rating = this.getAttribute('data-rating');
-        const stars = document.querySelectorAll('.star-icon');
-        
-        stars.forEach((s, index) => {
-            if (index < rating) {
-                s.classList.add('text-warning');
-            } else {
-                s.classList.remove('text-warning');
-            }
-        });
-    });
-});
-
-// Botão de finalizar
-document.getElementById('finishButton').addEventListener('click', function() {
-    const modal = bootstrap.Modal.getInstance(document.getElementById('serviceModal'));
-    modal.hide();
-    
-    // Reseta o formulário
-    document.getElementById('serviceForm').reset();
-    document.getElementById('serviceForm').classList.remove('was-validated', 'd-none');
-    document.getElementById('ticketScreen').classList.add('d-none');
-    document.getElementById('ratingScreen').classList.add('d-none');
-    
-    // Reseta as estrelas
-    document.querySelectorAll('.star-icon').forEach(star => {
-        star.classList.remove('text-warning');
-    });
-    
-    // Reseta os campos de endereço
-    document.getElementById('logradouro').value = '';
-    document.getElementById('bairro').value = '';
-    document.getElementById('localidade').value = '';
-    document.getElementById('uf').value = '';
-    
-    // Reseta a validação do CEP
-    document.getElementById('cep').classList.remove('is-valid', 'is-invalid');
-    document.getElementById('cepSuccess').classList.add('d-none');
-    document.getElementById('cepFeedback').classList.add('d-none');
-    
-    // Reseta a validação do CPF
-    document.getElementById('cpf').classList.remove('is-invalid');
-});
-
-// Inicializa o modal
-var serviceModal = new bootstrap.Modal(document.getElementById('serviceModal'));
-</script>
+   
 
   </body>
 </html>

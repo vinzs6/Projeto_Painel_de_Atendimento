@@ -28,202 +28,235 @@ window.addEventListener("click", () => {
   });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    let cepValidado = false;
-    let enderecoPreenchido = false;
-    $('#cpf').mask('000.000.000-00');
-    $('#cep').mask('00000-000');
+document.addEventListener("DOMContentLoaded", function () {
+  let cepValidado = false;
+  let enderecoPreenchido = false;
+  $("#cpf").mask("000.000.000-00");
+  $("#cep").mask("00000-000");
 
-    // Validação de CPF
-    function validarCPF(cpf) {
-        cpf = cpf.replace(/\D/g, '');
-        if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
-        
-        let soma = 0;
-        for (let i = 0; i < 9; i++) {
-            soma += parseInt(cpf.charAt(i)) * (10 - i);
-        }
-        let resto = 11 - (soma % 11);
-        let digito1 = resto > 9 ? 0 : resto;
-        
-        if (digito1 !== parseInt(cpf.charAt(9))) return false;
-        
-        soma = 0;
-        for (let i = 0; i < 10; i++) {
-            soma += parseInt(cpf.charAt(i)) * (11 - i);
-        }
-        resto = 11 - (soma % 11);
-        let digito2 = resto > 9 ? 0 : resto;
-        
-        return digito2 === parseInt(cpf.charAt(10));
+  // Validação de CPF
+  function validarCPF(cpf) {
+    cpf = cpf.replace(/\D/g, "");
+    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+
+    let soma = 0;
+    for (let i = 0; i < 9; i++) {
+      soma += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+    let resto = 11 - (soma % 11);
+    let digito1 = resto > 9 ? 0 : resto;
+
+    if (digito1 !== parseInt(cpf.charAt(9))) return false;
+
+    soma = 0;
+    for (let i = 0; i < 10; i++) {
+      soma += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+    resto = 11 - (soma % 11);
+    let digito2 = resto > 9 ? 0 : resto;
+
+    return digito2 === parseInt(cpf.charAt(10));
+  }
+
+  // Buscar CEP - função modificada
+  document.getElementById("searchCep").addEventListener("click", function () {
+    const cepInput = document.getElementById("cep");
+    const cep = cepInput.value.replace(/\D/g, "");
+
+    if (cep.length !== 8) {
+      cepInput.classList.add("is-invalid");
+      cepInput.classList.remove("is-valid");
+      document.getElementById("cepFeedback").textContent =
+        "CEP deve ter 8 dígitos";
+      cepValidado = false;
+      enderecoPreenchido = false;
+      return;
     }
 
-    // Buscar CEP - função modificada
-    document.getElementById('searchCep').addEventListener('click', function() {
-        const cepInput = document.getElementById('cep');
-        const cep = cepInput.value.replace(/\D/g, '');
-        
-        if (cep.length !== 8) {
-            cepInput.classList.add('is-invalid');
-            cepInput.classList.remove('is-valid');
-            document.getElementById('cepFeedback').textContent = 'CEP deve ter 8 dígitos';
-            cepValidado = false;
-            enderecoPreenchido = false;
-            return;
+    // Mostrar loading
+    const btn = this;
+    btn.innerHTML =
+      '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Buscando...';
+    btn.disabled = true;
+
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+      .then((response) => response.json())
+      .then((data) => {
+        btn.innerHTML = "Buscar";
+        btn.disabled = false;
+
+        if (data.erro || !data.logradouro) {
+          cepInput.classList.add("is-invalid");
+          cepInput.classList.remove("is-valid");
+          document.getElementById("cepFeedback").textContent =
+            "CEP não encontrado";
+          cepValidado = false;
+          enderecoPreenchido = false;
+          return;
         }
 
-        // Mostrar loading
-        const btn = this;
-        btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Buscando...';
-        btn.disabled = true;
-        
-        fetch(`https://viacep.com.br/ws/${cep}/json/`)
-            .then(response => response.json())
-            .then(data => {
-                btn.innerHTML = 'Buscar';
-                btn.disabled = false;
-                
-                if (data.erro || !data.logradouro) {
-                    cepInput.classList.add('is-invalid');
-                    cepInput.classList.remove('is-valid');
-                    document.getElementById('cepFeedback').textContent = 'CEP não encontrado';
-                    cepValidado = false;
-                    enderecoPreenchido = false;
-                    return;
-                }
-                
-                // Preencher endereço
-                document.getElementById('logradouro').value = data.logradouro || '';
-                document.getElementById('bairro').value = data.bairro || '';
-                document.getElementById('localidade').value = data.localidade || '';
-                document.getElementById('uf').value = data.uf || '';
-                
-                // Marcar como válido
-                cepInput.classList.remove('is-invalid');
-                cepInput.classList.add('is-valid');
-                document.getElementById('cepFeedback').textContent = '';
-                cepValidado = true;
-                enderecoPreenchido = true;
-            })
-            .catch(() => {
-                btn.innerHTML = 'Buscar';
-                btn.disabled = false;
-                cepInput.classList.add('is-invalid');
-                cepInput.classList.remove('is-valid');
-                document.getElementById('cepFeedback').textContent = 'Erro ao buscar CEP';
-                cepValidado = false;
-                enderecoPreenchido = false;
-            });
-    });
+        // Preencher endereço
+        document.getElementById("logradouro").value = data.logradouro || "";
+        document.getElementById("bairro").value = data.bairro || "";
+        document.getElementById("localidade").value = data.localidade || "";
+        document.getElementById("uf").value = data.uf || "";
 
-    // Validação do formulário - modificada
-    const form = document.getElementById('serviceForm');
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        
-        // Validar CPF
-        const cpfValido = validarCPF(document.getElementById('cpf').value);
-        if (!cpfValido) {
-            document.getElementById('cpf').classList.add('is-invalid');
-            document.getElementById('cpfFeedback').textContent = 'CPF inválido';
-        } else {
-            document.getElementById('cpf').classList.remove('is-invalid');
-        }
-        
-        // Validar CEP - agora verifica se foi buscado e é válido
-        const cep = document.getElementById('cep').value.replace(/\D/g, '');
-        if (cep.length !== 8 || !cepValidado) {
-            document.getElementById('cep').classList.add('is-invalid');
-            document.getElementById('cepFeedback').textContent = 
-                cep.length !== 8 ? 'CEP deve ter 8 dígitos' : 'Por favor, clique em buscar para validar o CEP';
-            return;
-        }
-        
-        // Verificar se o endereço foi preenchido
-        if (!enderecoPreenchido) {
-            document.getElementById('cep').classList.add('is-invalid');
-            document.getElementById('cepFeedback').textContent = 'Por favor, clique em buscar para validar o CEP';
-            return;
-        }
-        
-        // Só prossegue se tudo estiver válido
-        if (form.checkValidity() && cpfValido && cepValidado && enderecoPreenchido) {
-            form.classList.add('d-none');
-            document.getElementById('ticketScreen').classList.remove('d-none');
-            
-            // Gerar senha aleatória
-            const randomNum = Math.floor(100 + Math.random() * 900);
-            document.getElementById('generatedTicket').textContent = 'A' + randomNum;
-            
-            setTimeout(() => {
-                document.getElementById('printingMessage').classList.remove('d-none');
-                
-                setTimeout(() => {
-                    document.getElementById('ticketScreen').classList.add('d-none');
-                    document.getElementById('printingMessage').classList.add('d-none');
-                    document.getElementById('ratingScreen').classList.remove('d-none');
-                }, 2000);
-            }, 2000);
-        }
-        
-        form.classList.add('was-validated');
-    });
-
-    // Resetar estado do CEP quando o campo é modificado
-    document.getElementById('cep').addEventListener('input', function() {
-        this.classList.remove('is-valid', 'is-invalid');
+        // Marcar como válido
+        cepInput.classList.remove("is-invalid");
+        cepInput.classList.add("is-valid");
+        document.getElementById("cepFeedback").textContent = "";
+        cepValidado = true;
+        enderecoPreenchido = true;
+      })
+      .catch(() => {
+        btn.innerHTML = "Buscar";
+        btn.disabled = false;
+        cepInput.classList.add("is-invalid");
+        cepInput.classList.remove("is-valid");
+        document.getElementById("cepFeedback").textContent =
+          "Erro ao buscar CEP";
         cepValidado = false;
         enderecoPreenchido = false;
-        // Limpa campos de endereço se o CEP mudar
-        ['logradouro', 'bairro', 'localidade', 'uf'].forEach(id => {
-            document.getElementById(id).value = '';
-        });
+      });
+  });
+
+  // Validação do formulário - modificada
+  const form = document.getElementById("serviceForm");
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    // Validar CPF
+    const cpfValido = validarCPF(document.getElementById("cpf").value);
+    if (!cpfValido) {
+      document.getElementById("cpf").classList.add("is-invalid");
+      document.getElementById("cpfFeedback").textContent = "CPF inválido";
+    } else {
+      document.getElementById("cpf").classList.remove("is-invalid");
+    }
+
+    // Validar CEP - agora verifica se foi buscado e é válido
+    const cep = document.getElementById("cep").value.replace(/\D/g, "");
+    if (cep.length !== 8 || !cepValidado) {
+      document.getElementById("cep").classList.add("is-invalid");
+      document.getElementById("cepFeedback").textContent =
+        cep.length !== 8
+          ? "CEP deve ter 8 dígitos"
+          : "Por favor, clique em buscar para validar o CEP";
+      return;
+    }
+
+    // Verificar se o endereço foi preenchido
+    if (!enderecoPreenchido) {
+      document.getElementById("cep").classList.add("is-invalid");
+      document.getElementById("cepFeedback").textContent =
+        "Por favor, clique em buscar para validar o CEP";
+      return;
+    }
+
+    // Só prossegue se tudo estiver válido
+    if (
+      form.checkValidity() &&
+      cpfValido &&
+      cepValidado &&
+      enderecoPreenchido
+    ) {
+      form.classList.add("d-none");
+      document.getElementById("ticketScreen").classList.remove("d-none");
+
+      // Gerar senha aleatória
+      const randomNum = Math.floor(100 + Math.random() * 900);
+      const senhaGerada = "A" + randomNum;
+      document.getElementById("generatedTicket").textContent = senhaGerada;
+
+      // Salvar no localStorage
+      if (typeof Storage !== "undefined") {
+        // Recupera o array existente ou cria um novo se não existir
+        let senhas = JSON.parse(localStorage.getItem("senhasEmEspera")) || [];
+
+        // Adiciona a nova senha ao array
+        senhas.push(senhaGerada);
+
+        // Salva o array atualizado no localStorage
+        localStorage.setItem("senhasEmEspera", JSON.stringify(senhas));
+      } else {
+        console.log("Seu navegador não suporta localStorage");
+      }
+
+      setTimeout(() => {
+        document.getElementById("printingMessage").classList.remove("d-none");
+
+        setTimeout(() => {
+          document.getElementById("ticketScreen").classList.add("d-none");
+          document.getElementById("printingMessage").classList.add("d-none");
+          document.getElementById("ratingScreen").classList.remove("d-none");
+        }, 2000);
+      }, 2000);
+    }
+
+    form.classList.add("was-validated");
+  });
+
+  // Resetar estado do CEP quando o campo é modificado
+  document.getElementById("cep").addEventListener("input", function () {
+    this.classList.remove("is-valid", "is-invalid");
+    cepValidado = false;
+    enderecoPreenchido = false;
+    // Limpa campos de endereço se o CEP mudar
+    ["logradouro", "bairro", "localidade", "uf"].forEach((id) => {
+      document.getElementById(id).value = "";
+    });
+  });
+
+  // Avaliação por estrelas
+  const stars = document.querySelectorAll(".star-icon");
+  let selectedRating = 0;
+
+  stars.forEach((star) => {
+    star.addEventListener("click", function () {
+      selectedRating = parseInt(this.getAttribute("data-rating"));
+      stars.forEach((s, index) => {
+        s.classList.toggle("active", index < selectedRating);
+        s.style.color = index < selectedRating ? "#ffc107" : "#ddd";
+      });
+    });
+  });
+
+  // Finalizar atendimento
+  document
+    .getElementById("finishButton")
+    .addEventListener("click", function () {
+      // Fechar modal e recarregar a página
+      bootstrap.Modal.getInstance(
+        document.getElementById("serviceModal")
+      ).hide();
+      setTimeout(() => location.reload(), 500);
     });
 
-    // Avaliação por estrelas
-    const stars = document.querySelectorAll('.star-icon');
-    let selectedRating = 0;
-    
-    stars.forEach(star => {
-        star.addEventListener('click', function() {
-            selectedRating = parseInt(this.getAttribute('data-rating'));
-            stars.forEach((s, index) => {
-                s.classList.toggle('active', index < selectedRating);
-                s.style.color = index < selectedRating ? '#ffc107' : '#ddd';
-            });
-        });
-    });
+  // Resetar modal quando fechado
+  document
+    .getElementById("serviceModal")
+    .addEventListener("hidden.bs.modal", function () {
+      form.reset();
+      form.classList.remove("d-none", "was-validated");
+      document.getElementById("ticketScreen").classList.add("d-none");
+      document.getElementById("ratingScreen").classList.add("d-none");
+      document.getElementById("printingMessage").classList.add("d-none");
 
-    // Finalizar atendimento
-    document.getElementById('finishButton').addEventListener('click', function() {
-        // Fechar modal e recarregar a página
-        bootstrap.Modal.getInstance(document.getElementById('serviceModal')).hide();
-        setTimeout(() => location.reload(), 500);
-    });
+      // Limpar campos de endereço
+      ["logradouro", "bairro", "localidade", "uf"].forEach((id) => {
+        document.getElementById(id).value = "";
+      });
 
-    // Resetar modal quando fechado
-    document.getElementById('serviceModal').addEventListener('hidden.bs.modal', function() {
-        form.reset();
-        form.classList.remove('d-none', 'was-validated');
-        document.getElementById('ticketScreen').classList.add('d-none');
-        document.getElementById('ratingScreen').classList.add('d-none');
-        document.getElementById('printingMessage').classList.add('d-none');
-        
-        // Limpar campos de endereço
-        ['logradouro', 'bairro', 'localidade', 'uf'].forEach(id => {
-            document.getElementById(id).value = '';
-        });
-        
-        // Resetar estrelas
-        stars.forEach(star => {
-            star.classList.remove('active');
-            star.style.color = '#ddd';
-        });
-        
-        // Resetar estados do CEP
-        cepValidado = false;
-        enderecoPreenchido = false;
-        document.getElementById('cep').classList.remove('is-valid', 'is-invalid');
+      // Resetar estrelas
+      stars.forEach((star) => {
+        star.classList.remove("active");
+        star.style.color = "#ddd";
+      });
+
+      // Resetar estados do CEP
+      cepValidado = false;
+      enderecoPreenchido = false;
+      document.getElementById("cep").classList.remove("is-valid", "is-invalid");
     });
 });
