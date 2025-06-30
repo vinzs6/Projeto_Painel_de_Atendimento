@@ -166,22 +166,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Gerar senha aleatória
       const randomNum = Math.floor(100 + Math.random() * 900);
-      const senhaGerada = "A" + randomNum;
-      document.getElementById("generatedTicket").textContent = senhaGerada;
+      const novaSenha = 'A' + randomNum;
+      document.getElementById('generatedTicket').textContent = novaSenha;
 
-      // Salvar no localStorage
-      if (typeof Storage !== "undefined") {
-        // Recupera o array existente ou cria um novo se não existir
-        let senhas = JSON.parse(localStorage.getItem("senhasEmEspera")) || [];
-
-        // Adiciona a nova senha ao array
-        senhas.push(senhaGerada);
-
-        // Salva o array atualizado no localStorage
-        localStorage.setItem("senhasEmEspera", JSON.stringify(senhas));
-      } else {
-        console.log("Seu navegador não suporta localStorage");
-      }
+      // Salvar no localStorage (adicionar na fila)
+      let fila = JSON.parse(localStorage.getItem("filaSenhas")) || [];
+      fila.push(novaSenha);
+      localStorage.setItem("filaSenhas", JSON.stringify(fila));
 
       setTimeout(() => {
         document.getElementById("printingMessage").classList.remove("d-none");
