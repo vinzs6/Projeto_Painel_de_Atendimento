@@ -1,10 +1,6 @@
-// ========================================
-// Atualiza data, hora e clima no topo/rodapé
-// ========================================
-function atualizarTopoRodape() {
+function DataHora() {
   const agora = new Date();
 
-  // Formatando data e hora
   const data = agora.toLocaleDateString("pt-BR", {
     // weekday: 'long',
     year: "numeric",
@@ -17,19 +13,16 @@ function atualizarTopoRodape() {
     minute: "2-digit",
   });
 
-  const textoDataHora = `${hora} ${data}`;
+  document.getElementById("dataHora").textContent = `${hora} ${data}`;
+  // document.getElementById('hora').textContent = `${hora}`;
+}
+setInterval(DataHora, 1000);
+DataHora();
 
-  // Atualizando data/hora no topo e rodapé (com verificação de elementos)
-  const topoData = document.getElementById("displayDataHoraTopo");
-  const rodapeData = document.getElementById("displayDataHoraRodape");
-  if (topoData) topoData.textContent = textoDataHora;
-  if (rodapeData) rodapeData.textContent = textoDataHora;
-
-  // Clima via OpenWeather
-  const apiKey = "1cc74e49bdf9f9a0b65fcfc199bf0685"; // ⚠️ IMPORTANTE: Esta chave da API está hardcoded temporariamente.
-  // Em versões futuras, será movida para o back-end ou variáveis de ambiente (.env). 
-  
-    const cidade = "São Paulo";
+// Buscar clima usando OpenWeather
+async function buscarClima() {
+  const apiKey = "1cc74e49bdf9f9a0b65fcfc199bf0685"; // key de API do OpenWeather
+  const cidade = "São Paulo"; // Cidade para buscar o clima
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${apiKey}&lang=pt_br&units=metric`;
 
   try {
