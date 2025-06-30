@@ -32,37 +32,6 @@ function atualizarTopoRodape() {
     const cidade = "São Paulo";
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${apiKey}&lang=pt_br&units=metric`;
 
-<<<<<<< HEAD
-  fetch(url)
-    .then((res) => res.json())
-    .then((dados) => {
-      const temperatura = dados.main.temp.toFixed(1) + "°C";
-      const climaTopo = document.getElementById("displayClimaTopo");
-      const climaRodape = document.getElementById("displayClimaRodape");
-      if (climaTopo) climaTopo.textContent = temperatura;
-      if (climaRodape) climaRodape.textContent = temperatura;
-    })
-    .catch(() => {
-      const climaTopo = document.getElementById("displayClimaTopo");
-      const climaRodape = document.getElementById("displayClimaRodape");
-      if (climaTopo) climaTopo.textContent = "-- °C";
-      if (climaRodape) climaRodape.textContent = "-- °C";
-    });
-}
-
-// Atualiza imediatamente e depois a cada 10 segundos
-setInterval(atualizarTopoRodape, 10000);
-atualizarTopoRodape();
-
-// Inicializações adicionais
-document.addEventListener("DOMContentLoaded", () => {
-  const botao = document.getElementById("btnChamarProxima");
-  if (botao) {
-    botao.addEventListener("click", chamarProximaSenha);
-  }
-  atualizarTela?.(); // Verifica se a função existe antes de chamar
-});
-=======
   try {
     const resposta = await fetch(url);
     const dados = await resposta.json();
@@ -179,4 +148,3 @@ function iniciarCiclo() {
     setTimeout(exibirProximaSenha, tempoTotal);
 }
 window.addEventListener('DOMContentLoaded', iniciarCiclo);
->>>>>>> main
