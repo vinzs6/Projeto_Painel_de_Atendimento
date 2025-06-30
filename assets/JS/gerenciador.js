@@ -145,8 +145,6 @@ function iniciarGerenciador() {
 // 6) Inicia ao carregar o DOM
 // ========================================
 window.addEventListener("DOMContentLoaded", iniciarGerenciador);
-<<<<<<< HEAD
-=======
 
 
 // Painel de Controle de Vídeos
@@ -238,4 +236,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderControlList();
 });
->>>>>>> main
