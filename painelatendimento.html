@@ -51,20 +51,20 @@
             text-align: center;
             flex-direction: row;
             width: 50%;
-            background-color: #f0f0f0;
+            background-color: #cecaca;
             border-radius: 16px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 
         }
         .senha-under-left {
-            float: left;
+            float: center;
             margin-right: auto;
             height: 150%;
         }
         .senha-under-right {
-            float: right;
-            margin-left: auto;
-            margin-right: 0;
+        
+            margin-left: 170px;
+
         }
         .header{
             background-color: #c8d8e4;
@@ -82,7 +82,7 @@
         <img src="assets/Img/logof.jpg" alt="Logo Empresa" />
       </div>
   </header>
-
+<br><br><br>
 <!--Area video -->
   <div class="area-principal">
         <div id="carrossel-container">
@@ -96,33 +96,26 @@
         <div class="area-senha">
           <div class="senhaAtual">
             <div class="titulo"><b>Senha Atual: </b></div><br>
-            <div class="senha" id="senha">---</div><br>
+            <div class="senha" id="senhaAtual">---</div><br>
             <div class="progresso-container">
                 <div class="progresso-barra" id="progresso"></div>
             </div>
           </div>  
-            <div class="tempo-restante" id="tempo-restante">Próxima senha em 5s</div><br>
-        </div>
-        </div>
+           <div class="tempo-restante" id="tempo-restante">Próxima senha em 05:00</div><br>
+        
+        
 
-<!--Area Senha, parte baixa-->
-          <div class="senha-under-left">
-            <div class="titulo"><b>Próxima Senha: </b></div><br>
-            <div class="senha" id="proxima-senha">---</div><br>
-            <div class="progresso-container">
-                <div class="progresso-barra" id="progresso-proxima"></div>
-            </div>
-          </div>
+
 
           <div class="senha-under-right">
             <div class="titulo"><b>Senha Anterior: </b></div><br>
-            <div class="senha" id="proxima-senha">---</div><br>
+            <div class="senha-proxima" id="senhasAtendidas">---</div><br>
             <div class="progresso-container">
                 <div class="progresso-barra" id="progresso-proxima"></div>
             </div>
           </div>
-          
-
+          </div>
+</div>
 
   <!-- RODAPÉ -->
     <footer>
@@ -153,5 +146,33 @@
 
     <script src="assets/JS/footer.js"></script>
     <script src="assets/JS/carrossel.js"></script>
+    <script src="assets/JS/gerenciador.js"></script>
+    <script>
+      function iniciarCronometro() {
+    let segundos = 300; // 300 segundos = 5 minutos
+    const elemento = document.getElementById('tempo-restante');
+
+    function atualizarCronometro() {
+        const minutos = Math.floor(segundos / 60);
+        const segs = segundos % 60;
+        const tempoFormatado = `${minutos.toString().padStart(2, '0')}:${segs.toString().padStart(2, '0')}`;
+        
+        elemento.textContent = `Próxima senha em ${tempoFormatado}`;
+
+        if (segundos <= 0) {
+            segundos = 300; // Reinicia para 5 minutos
+        } else {
+            segundos--;
+        }
+    }
+
+    // Inicia imediatamente e a cada segundo
+    atualizarCronometro(); // Mostra 05:00 logo no início
+    const intervalo = setInterval(atualizarCronometro, 1000);
+}
+
+// Inicia o cronômetro quando a página carregar
+window.onload = iniciarCronometro;
+    </script>
 </body>
 </html>

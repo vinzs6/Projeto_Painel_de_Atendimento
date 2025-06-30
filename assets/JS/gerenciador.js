@@ -46,48 +46,29 @@ function carregarDadosLocalStorage() {
 function renderizarPainel() {
   const { filaSenhas, senhasAtendidas, ultimaSenhaChamou } = carregarDadosLocalStorage();
 
-  // 2.1) Atualiza a senha atual
+  // 2.1) Atualiza a senha atual com animação
   const campoSenhaAtual = document.getElementById("senhaAtual");
   if (campoSenhaAtual) {
     campoSenhaAtual.textContent = ultimaSenhaChamou || "—";
+    campoSenhaAtual.classList.add("pulse");
+    setTimeout(() => campoSenhaAtual.classList.remove("pulse"), 500);
   }
 
   // 2.2) Preenche a lista de senhas em espera
   const listaEsperaEl = document.getElementById("senhasEspera");
   if (listaEsperaEl) {
-    listaEsperaEl.innerHTML = "";
-
-    if (filaSenhas.length === 0) {
-      const liVazio = document.createElement("li");
-      liVazio.textContent = "(nenhuma senha em espera)";
-      liVazio.classList.add("vazio");
-      listaEsperaEl.appendChild(liVazio);
-    } else {
-      filaSenhas.forEach((senha) => {
-        const li = document.createElement("li");
-        li.textContent = senha;
-        listaEsperaEl.appendChild(li);
-      });
-    }
+    listaEsperaEl.innerHTML = filaSenhas.length === 0 ? 
+      '<li class="vazio">(nenhuma senha em espera)</li>' : 
+      filaSenhas.map(senha => `<li>${senha}</li>`).join('');
   }
 
-  // 2.3) Preenche a lista de senhas atendidas
+  // 2.3) Preenche a lista de senhas atendidas (mantém apenas 3)
   const listaAtendidasEl = document.getElementById("senhasAtendidas");
   if (listaAtendidasEl) {
-    listaAtendidasEl.innerHTML = "";
-
-    if (senhasAtendidas.length === 0) {
-      const liVazio = document.createElement("li");
-      liVazio.textContent = "(nenhuma senha atendida ainda)";
-      liVazio.classList.add("vazio");
-      listaAtendidasEl.appendChild(liVazio);
-    } else {
-      senhasAtendidas.forEach((senha) => {
-        const li = document.createElement("li");
-        li.textContent = senha;
-        listaAtendidasEl.appendChild(li);
-      });
-    }
+    const ultimas3Senhas = senhasAtendidas.slice(-3);
+    listaAtendidasEl.innerHTML = ultimas3Senhas.length === 0 ? 
+      '<li class="vazio">(nenhuma senha atendida ainda)</li>' : 
+      ultimas3Senhas.map(senha => `<li>${senha}</li>`).join('');
   }
 }
 
@@ -105,8 +86,10 @@ function chamarProximaSenha() {
   const proxima = filaSenhas.shift(); // FIFO
   localStorage.setItem("ultimaSenha", proxima);
 
-  senhasAtendidas.push(proxima);
-  localStorage.setItem("senhasAtendidas", JSON.stringify(senhasAtendidas));
+  // Mantém apenas as 3 últimas senhas atendidas
+  const novasSenhasAtendidas = [...senhasAtendidas, proxima].slice(-3);
+  
+  localStorage.setItem("senhasAtendidas", JSON.stringify(novasSenhasAtendidas));
   localStorage.setItem("filaSenhas", JSON.stringify(filaSenhas));
 
   renderizarPainel();
@@ -125,65 +108,63 @@ function resetarTudo() {
 }
 
 // ========================================
-// 5) Inicialização dos botões e painel
+// 5) Configura atualização automática
 // ========================================
-function iniciarGerenciador() {
-  const btnChamar = document.getElementById("btnChamarProxima");
-  if (btnChamar) {
-    btnChamar.addEventListener("click", chamarProximaSenha);
-  }
+function configurarAtualizacaoAutomatica() {
+  // Atualiza quando houver mudanças no localStorage (entre abas)
+  window.addEventListener('storage', (event) => {
+    if (event.key === "ultimaSenha" || event.key === "filaSenhas" || event.key === "senhasAtendidas") {
+      renderizarPainel();
+    }
+  });
 
-  const btnReset = document.getElementById("btnResetar");
-  if (btnReset) {
-    btnReset.addEventListener("click", resetarTudo);
-  }
-
-  renderizarPainel();
+  // Atualiza periodicamente (para mesma aba)
+  setInterval(renderizarPainel, 2000);
 }
 
 // ========================================
-// 6) Inicia ao carregar o DOM
+// 6) Inicialização dos botões e painel
+// ========================================
+function iniciarGerenciador() {
+  const btnChamar = document.getElementById("btnChamarProxima");
+  if (btnChamar) btnChamar.addEventListener("click", chamarProximaSenha);
+
+  const btnReset = document.getElementById("btnResetar");
+  if (btnReset) btnReset.addEventListener("click", resetarTudo);
+
+  renderizarPainel();
+  configurarAtualizacaoAutomatica();
+}
+
+// ========================================
+// 7) Inicia ao carregar o DOM
 // ========================================
 window.addEventListener("DOMContentLoaded", iniciarGerenciador);
 
-
+// ========================================
 // Painel de Controle de Vídeos
-// Gerenciador de Vídeos - Painel de Controle
+// ========================================
 document.addEventListener('DOMContentLoaded', () => {
     const addBtn = document.getElementById('add-video-btn');
     const urlInput = document.getElementById('video-url-input');
     const videoListUl = document.getElementById('video-list');
-    // NOVO: Referência aos botões de navegação
     const prevBtn = document.getElementById('ante-video-btn');
     const nextBtn = document.getElementById('prox-video-btn');
     
-    // NOVO: Chaves para o localStorage
     const listKey = 'videoCarrosselList';
     const indexKey = 'videoCarrosselIndex';
 
-    // Função para renderizar a lista de vídeos no painel de controle
+    // Função para renderizar a lista de vídeos
     const renderControlList = () => {
         const videos = JSON.parse(localStorage.getItem(listKey)) || [];
-        
-        videoListUl.innerHTML = '';
-
-        if (videos.length === 0) {
-            videoListUl.innerHTML = '<li>Nenhum vídeo na lista.</li>';
-            return;
-        }
-        
-        videos.forEach((url, index) => {
-            const li = document.createElement('li');
-            const textSpan = document.createElement('span');
-            textSpan.textContent = url;
-            li.appendChild(textSpan);
-            const removeBtn = document.createElement('button');
-            removeBtn.textContent = 'Remover';
-            removeBtn.className = 'remove-btn';
-            removeBtn.onclick = () => removeVideo(index);
-            li.appendChild(removeBtn);
-            videoListUl.appendChild(li);
-        });
+        videoListUl.innerHTML = videos.length === 0 ? 
+            '<li>Nenhum vídeo na lista.</li>' : 
+            videos.map((url, index) => `
+                <li>
+                    <span>${url}</span>
+                    <button class="remove-btn" onclick="removeVideo(${index})">Remover</button>
+                </li>
+            `).join('');
     };
 
     // Função para adicionar um vídeo
@@ -198,39 +179,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Função para remover um vídeo
-    const removeVideo = (indexToRemove) => {
+    // Função para remover um vídeo (deve ser global para o onclick)
+    window.removeVideo = (indexToRemove) => {
         const videos = JSON.parse(localStorage.getItem(listKey)) || [];
         videos.splice(indexToRemove, 1);
         localStorage.setItem(listKey, JSON.stringify(videos));
-        // Ao remover, reseta para o primeiro vídeo
-        localStorage.setItem(indexKey, '0'); 
+        localStorage.setItem(indexKey, '0');
         renderControlList();
     };
 
-    //Função para navegar entre os vídeos proximo e anterior
+    // Função para navegar entre vídeos
     const navigate = (direction) => {
         const videos = JSON.parse(localStorage.getItem(listKey)) || [];
-        if (videos.length < 2) return; // Não faz nada se tiver menos de 2 vídeos
+        if (videos.length < 2) return;
 
         let currentIndex = parseInt(localStorage.getItem(indexKey)) || 0;
+        currentIndex = direction === 'prox' ? 
+            (currentIndex + 1) % videos.length : 
+            (currentIndex - 1 + videos.length) % videos.length;
 
-        if (direction === 'prox') {
-            currentIndex = (currentIndex + 1) % videos.length;
-        } else if (direction === 'ante') {
-            currentIndex = (currentIndex - 1 + videos.length) % videos.length;
-        }
-
-        // Salva o novo índice(posição) no localStorage para o carrossel "ouvir"
         localStorage.setItem(indexKey, currentIndex);
     };
 
-    // Adiciona clique aos botões de adicionar video 
+    // Event listeners
     addBtn.addEventListener('click', addVideo);
-    urlInput.addEventListener('keypress', (event) => {
-        if (event.key === 'Enter') addVideo();
-    });
-    // Adiciona click aos botões de proximo e anterior
+    urlInput.addEventListener('keypress', (e) => e.key === 'Enter' && addVideo());
     prevBtn.addEventListener('click', () => navigate('ante'));
     nextBtn.addEventListener('click', () => navigate('prox'));
 
