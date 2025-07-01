@@ -74,6 +74,7 @@
         }
     </style>
 </head>
+<audio id="somChamada" src="assets/audio/tan-tan.mp3" preload="auto"></audio>
 <body>
 
   <header class="header">
@@ -173,6 +174,39 @@
 
 // Inicia o cronômetro quando a página carregar
 window.onload = iniciarCronometro;
-    </script>
+  </script>
+  
+  <script>
+    const som = document.getElementById("somChamada");
+    let ultimaSenhaExibida = localStorage.getItem("ultimaSenha") || "---";
+
+    function tocarSomChamada() {
+      if (som) {
+        som.currentTime = 0;
+        som.play().catch(e => console.warn("Som não pôde ser tocado:", e));
+      }
+    }
+
+    function atualizarSenhaAtual() {
+      const novaSenha = localStorage.getItem("ultimaSenha") || "---";
+
+      // Verifica se a senha mudou
+      if (novaSenha !== ultimaSenhaExibida) {
+      ultimaSenhaExibida = novaSenha;
+      document.getElementById("senhaAtual").textContent = novaSenha;
+
+      // Só toca o som se a senha for diferente de "---"
+      if (novaSenha !== "---") {
+        tocarSomChamada();
+      }
+    }
+    }
+
+    // Atualiza a cada 2 segundos
+    setInterval(atualizarSenhaAtual, 2000);
+    // Garante que a senha seja mostrada logo ao carregar
+    atualizarSenhaAtual();
+  </script>
+
 </body>
 </html>
