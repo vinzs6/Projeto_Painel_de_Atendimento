@@ -3,6 +3,7 @@
 Este é um projeto de Painel de Atendimento, desenvolvido para gerenciar e exibir senhas em uma fila de atendimento. O sistema permite a emissão de novas senhas, a chamada do próximo cliente e a visualização em tempo real das senhas que estão sendo chamadas em um painel público.
 
 ✨ Funcionalidades
+
 [Tela de Emissão de Senhas]: Uma interface simples para o cliente retirar uma nova senha (ex: Normal ou Prioritária).
 
 [Tela de Atendimento]: Interface para o atendente chamar a próxima senha da fila.
